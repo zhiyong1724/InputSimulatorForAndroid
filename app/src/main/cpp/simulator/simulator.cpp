@@ -131,18 +131,17 @@ bool Simulator::delayCommand(const cJSON* json)
 		mConsole->log("命令delay缺少duration字段或者字段类型错误！");
 		return false;
 	}
-	int dutation = (int)cJSON_GetNumberValue(durationJson);
+	int duration = (int)cJSON_GetNumberValue(durationJson);
 
+    int random = -1;
 	cJSON* randomJson = cJSON_GetObjectItem(json, "random");
-	if (!randomJson || !cJSON_IsNumber(randomJson))
+	if (randomJson && cJSON_IsNumber(randomJson))
 	{
-		mConsole->log("命令delay缺少random字段或者字段类型错误！");
-		return false;
+        random = (int)cJSON_GetNumberValue(randomJson);
 	}
-	int random = (int)cJSON_GetNumberValue(randomJson);
 	int ran = random > 0 ? ::rand() % random : 0;
-	dutation += ran;
-	std::this_thread::sleep_for(std::chrono::milliseconds(dutation));
+    duration += ran;
+	std::this_thread::sleep_for(std::chrono::milliseconds(duration));
 	return true;
 }
 
@@ -156,11 +155,11 @@ bool Simulator::keyDownCommand(const cJSON* json)
 	}
 	int key = (int)cJSON_GetNumberValue(keyJson);
 
-	int dutation = -1;
+	int duration = -1;
 	cJSON* durationJson = cJSON_GetObjectItem(json, "duration");
 	if (durationJson && cJSON_IsNumber(durationJson))
 	{
-		dutation = (int)cJSON_GetNumberValue(durationJson);
+        duration = (int)cJSON_GetNumberValue(durationJson);
 	}
 	
 	int random = -1;
@@ -170,11 +169,11 @@ bool Simulator::keyDownCommand(const cJSON* json)
 		random = (int)cJSON_GetNumberValue(randomJson);
 	}
 	int ran = random > 0 ? ::rand() % random : 0;
-	dutation += ran;
+    duration += ran;
 	mSimulateKey->keyDown(key);
-	if (dutation >= 0)
+	if (duration >= 0)
 	{
-		std::this_thread::sleep_for(std::chrono::milliseconds(dutation));
+		std::this_thread::sleep_for(std::chrono::milliseconds(duration));
 		mSimulateKey->keyUp(key);
 	}
 	return true;
@@ -434,6 +433,18 @@ bool Simulator::touchCommand(const cJSON* json)
     }
     int y = (int)cJSON_GetNumberValue(yJson);
 
+    int random = -1;
+    cJSON* randomJson = cJSON_GetObjectItem(json, "random");
+    if (randomJson && cJSON_IsNumber(randomJson))
+    {
+        random = (int)cJSON_GetNumberValue(randomJson);
+    }
+    int ran = random > 0 ? ::rand() % random : 0;
+    x += ran;
+
+    ran = random > 0 ? ::rand() % random : 0;
+    y += ran;
+
     cJSON* durationJson = cJSON_GetObjectItem(json, "duration");
     if (!durationJson || !cJSON_IsNumber(durationJson))
     {
@@ -486,6 +497,15 @@ bool Simulator::swipeCommand(const cJSON* json)
         return false;
     }
     int endY = (int)cJSON_GetNumberValue(endYJson);
+
+    int random = -1;
+    cJSON* randomJson = cJSON_GetObjectItem(json, "random");
+    if (randomJson && cJSON_IsNumber(randomJson))
+    {
+        random = (int)cJSON_GetNumberValue(randomJson);
+    }
+    int ran = random > 0 ? ::rand() % random : 0;
+    duration += ran;
     mSimulateTouch->swipe(x, y, endX, endY, duration);
     return true;
 }
