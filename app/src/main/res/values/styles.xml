@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomAppBackGround" parent="@style/Theme.AppCompat">
+        <item name="android:background">#2B2D30</item>
+    </style>
+    <style name="CustomTextView" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:background">#1E1F22</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+</resources>

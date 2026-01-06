@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Input Simulator</string>
+    <string name="start">start</string>
+    <string name="stop">stop</string>
+    <string name="storage_permission_required">Storage permission is required</string>
+    <string name="storage_permission_required_description">This application needs to access your external storage to read files. Please grant storage permission to continue using the application\'s features.</string>
+    <string name="cancel">Cancel</string>
+    <string name="to_settings">To settings</string>
+    <string name="enable_accessibility_service">The accessibility service needs to be enabled</string>
+    <string name="enable_accessibility_service_description">This application requires the activation of accessibility services. Please go to the system settings to enable the accessibility service function for this application.</string>
+    <string name="accessibility_service_description">This application requires the system\'s accessibility service to implement the simulated input function.</string>
+</resources>

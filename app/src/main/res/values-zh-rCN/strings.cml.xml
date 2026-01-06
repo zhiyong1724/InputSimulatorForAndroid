@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">输入模拟器</string>
+    <string name="start">开始</string>
+    <string name="stop">结束</string>
+    <string name="storage_permission_required">需要存储权限</string>
+    <string name="storage_permission_required_description">此应用需要访问您的外部存储器以读取文件。请授予存储权限以继续使用应用功能。</string>
+    <string name="cancel">取消</string>
+    <string name="to_settings">去设置</string>
+    <string name="enable_accessibility_service">需要开启无障碍服务</string>
+    <string name="enable_accessibility_service_description">此应用需要开启无障碍服务，请到系统设置中为应用开启无障碍服务功能。</string>
+    <string name="accessibility_service_description">此应用需要借助系统无障碍服务去实现模拟输入功能。</string>
+</resources>
