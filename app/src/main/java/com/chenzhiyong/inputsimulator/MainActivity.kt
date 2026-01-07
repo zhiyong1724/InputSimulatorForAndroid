@@ -56,10 +56,9 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         checkAndRequestStoragePermission()
-        if (!isAccessibilityServiceEnabled()) {
-            showEnableAccessibilityServiceDialog()
-        }
+        showEnableAccessibilityServiceDialog()
 
         mainActivityBroadcastReceiver = MainActivityBroadcastReceiver()
         val filter = IntentFilter(AndroidConsoleView.LOG_ACTION)
@@ -125,19 +124,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun getPublicDirectory() : String{
         return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path
-    }
-
-    // 检查无障碍服务是否开启
-    private fun isAccessibilityServiceEnabled(): Boolean {
-        val accessibilityManager = getSystemService(ACCESSIBILITY_SERVICE) as AccessibilityManager
-        val enabledServices =
-            accessibilityManager.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_GENERIC)
-        for (enabledService in enabledServices) {
-            if (enabledService.id.contains(packageName)) {
-                return true
-            }
-        }
-        return false
     }
 
     private inner class MainActivityBroadcastReceiver : BroadcastReceiver() {

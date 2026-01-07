@@ -12,6 +12,7 @@ import android.os.Build
 import android.view.accessibility.AccessibilityEvent
 import androidx.annotation.RequiresApi
 
+
 class InputAccessibilityService : AccessibilityService() {
     private var inputReceiver: InputReceiver? = null
     private var inputSimulator: InputSimulator? = null
