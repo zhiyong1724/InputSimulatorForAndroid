@@ -453,6 +453,10 @@ bool Simulator::touchCommand(const cJSON* json)
     }
     int duration = (int)cJSON_GetNumberValue(durationJson);
     mSimulateTouch->click(x, y, duration);
+    if (duration >= 0)
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(duration));
+    }
     return true;
 }
 
@@ -507,5 +511,9 @@ bool Simulator::swipeCommand(const cJSON* json)
     int ran = random > 0 ? ::rand() % random : 0;
     duration += ran;
     mSimulateTouch->swipe(x, y, endX, endY, duration);
+    if (duration >= 0)
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(duration));
+    }
     return true;
 }
