@@ -77,8 +77,13 @@ class InputAccessibilityService : AccessibilityService() {
     private inner class InputReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             when(intent.action) {
-                START_ACTION -> { inputSimulator?.start() }
-                STOP_ACTION -> { inputSimulator?.stop() }
+                START_ACTION -> {
+                    inputSimulator?.start()
+                }
+                STOP_ACTION -> {
+                    inputSimulator?.stop()
+                    stopSelf()
+                }
                 LOAD_SCRIPT_ACTION -> {
                     val script = intent.getStringExtra("script")
                     script?.let { inputSimulator?.loadScript(it) }

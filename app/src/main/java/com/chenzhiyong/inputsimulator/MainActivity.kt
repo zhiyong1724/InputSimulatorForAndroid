@@ -67,6 +67,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        val intent = Intent(InputAccessibilityService.STOP_ACTION)
+        sendBroadcast(intent)
         if (mainActivityBroadcastReceiver != null) {
             unregisterReceiver(mainActivityBroadcastReceiver)
         }
