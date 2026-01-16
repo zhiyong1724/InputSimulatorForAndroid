@@ -48,15 +48,13 @@ bool Simulator::sleep(long ms)
 {
     std::unique_lock<std::mutex> autoLock(mCondLock);
     auto end = std::chrono::system_clock::now() + std::chrono::milliseconds(ms);
-    auto result = std::cv_status::no_timeout;
     while (!mIsReady)
     {
-        result = mCond.wait_until(autoLock, end);
+        auto result = mCond.wait_until(autoLock, end);
+        if (std::cv_status::timeout == result)
+            return true;
     }
-    if (result != std::cv_status::no_timeout)
-        return true;
-    else
-        return false;
+    return false;
 }
 
 void Simulator::loadCommand()
