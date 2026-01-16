@@ -51,5 +51,6 @@ private:
     std::mutex mCondLock;
     std::condition_variable mCond;
     std::mutex mLock;
+    bool mIsReady;
 };
 #endif

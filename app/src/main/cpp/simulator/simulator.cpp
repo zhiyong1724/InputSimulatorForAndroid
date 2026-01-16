@@ -1,7 +1,8 @@
 #include "simulator.h"
 #include <stdio.h>
 #include <stdlib.h>
-Simulator::Simulator(SimulateKey* simulateKey, SimulateMouse* simulateMouse, SimulateTouch *simulateTouch, Console* console) : mSimulateKey(simulateKey), mSimulateMouse(simulateMouse), mSimulateTouch(simulateTouch), mConsole(console)
+#include <chrono>
+Simulator::Simulator(SimulateKey* simulateKey, SimulateMouse* simulateMouse, SimulateTouch *simulateTouch, Console* console) : mSimulateKey(simulateKey), mSimulateMouse(simulateMouse), mSimulateTouch(simulateTouch), mConsole(console), mIsReady(false)
 {
 	mIsRunning.store(false);
 	loadCommand();
@@ -30,19 +31,29 @@ void Simulator::start()
 void Simulator::stop()
 {
     mCondLock.lock();
+    mIsReady = true;
     mCond.notify_all();
     mCondLock.unlock();
     std::lock_guard<std::mutex> autoLock(mLock);
-    if (mSimulatorThread->joinable())
+    if(mIsRunning.load())
     {
-        mSimulatorThread->join();
+        if (mSimulatorThread->joinable())
+        {
+            mSimulatorThread->join();
+        }
     }
 }
 
 bool Simulator::sleep(long ms)
 {
     std::unique_lock<std::mutex> autoLock(mCondLock);
-    if (mCond.wait_for(autoLock, std::chrono::milliseconds(ms)) != std::cv_status::no_timeout)
+    auto end = std::chrono::system_clock::now() + std::chrono::milliseconds(ms);
+    auto result = std::cv_status::no_timeout;
+    while (!mIsReady)
+    {
+        result = mCond.wait_until(autoLock, end);
+    }
+    if (result != std::cv_status::no_timeout)
         return true;
     else
         return false;

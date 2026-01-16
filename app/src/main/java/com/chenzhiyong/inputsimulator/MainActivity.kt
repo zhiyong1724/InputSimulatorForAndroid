@@ -43,6 +43,8 @@ class MainActivity : AppCompatActivity() {
         }
         endButton = findViewById(R.id.endButton)
         endButton.setOnClickListener{
+            val intent = Intent(InputAccessibilityService.STOP_ACTION)
+            sendBroadcast(intent)
             finishAffinity()
             exitProcess(0)
         }
@@ -67,8 +69,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        val intent = Intent(InputAccessibilityService.STOP_ACTION)
-        sendBroadcast(intent)
         if (mainActivityBroadcastReceiver != null) {
             unregisterReceiver(mainActivityBroadcastReceiver)
         }
@@ -92,6 +92,8 @@ class MainActivity : AppCompatActivity() {
             })
             .setNegativeButton(getText(R.string.cancel),
                 DialogInterface.OnClickListener { dialog, which ->
+                    val intent = Intent(InputAccessibilityService.STOP_ACTION)
+                    sendBroadcast(intent)
                     finishAffinity()
                     exitProcess(0)
                 })
@@ -117,6 +119,8 @@ class MainActivity : AppCompatActivity() {
             })
             .setNegativeButton(getText(R.string.cancel),
                 DialogInterface.OnClickListener { dialog, which ->
+                    val intent = Intent(InputAccessibilityService.STOP_ACTION)
+                    sendBroadcast(intent)
                     finishAffinity()
                     exitProcess(0)
                 })
