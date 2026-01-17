@@ -1,5 +1,4 @@
 package com.chenzhiyong.inputsimulator
-import android.accessibilityservice.AccessibilityServiceInfo
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.DialogInterface
@@ -9,7 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.Settings
-import android.view.accessibility.AccessibilityManager
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
@@ -22,6 +21,7 @@ import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
     private lateinit var consoleTextView : TextView
+    private lateinit var consoleScrollView : ScrollView
     private lateinit var startButton : TextView
     private lateinit var endButton : TextView
     private lateinit var mainActivityViewModel : MainActivityViewModel
@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
         consoleTextView = findViewById(R.id.consoleTextView)
+        consoleScrollView = findViewById(R.id.consoleScrollView)
         startButton = findViewById(R.id.startButton)
         startButton.setOnClickListener{
             var intent = Intent(InputAccessibilityService.LOAD_SCRIPT_ACTION)
@@ -52,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         mainActivityViewModel.getConsoleText().observe(this) {
             text : String ->
             consoleTextView.setText(text)
+            consoleScrollView.scrollTo(0, consoleTextView.bottom)
         }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

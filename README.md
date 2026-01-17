@@ -36,13 +36,16 @@
 |touch|x|number|点击屏幕横坐标|
 |-|y|number|点击屏幕纵坐标|
 |-|duration|number|点击持续时间，单位为毫秒|
-|-|random|number|可选项，x和y加上一个0到random范围的随机数|
-|swipe|x|number|滑动起点屏幕横坐标|
-|-|y|number|滑动起点屏幕纵坐标|
+|-|random|number|可选项，duration加上一个0到random范围的随机数|
+|-|offset|number|可选项，x和y加上一个0到offset范围的随机数|
+|swipe|start_x|number|滑动起点屏幕横坐标|
+|-|start_y|number|滑动起点屏幕纵坐标|
 |-|end_x|number|滑动终点屏幕横坐标|
 |-|end_y|number|滑动终点屏幕纵坐标|
 |-|duration|number|点击持续时间，单位为毫秒|
 |-|random|number|可选项，duration加上一个0到random范围的随机数|
+|-|start_offset|number|可选项，start_x和start_y加上一个0到start_offset范围的随机数|
+|-|end_offset|number|可选项，end_x和end_y加上一个0到end_offset范围的随机数|
 ## 代码仓库
 https://github.com/zhiyong1724/InputSimulatorForAndroid.git
 ## BUG反馈
